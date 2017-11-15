@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1081890269620",
+    "firebase_url": "https://formulariapp.firebaseio.com",
+    "project_id": "formulariapp",
+    "storage_bucket": "formulariapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081890269620:android:a5b86a0d4b334155",
+        "android_client_info": {
+          "package_name": "co.edu.gitei.formulariapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081890269620-pqhjavo4ve458lb6cv88j2fuslv7ur85.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.edu.gitei.formulariapp",
+            "certificate_hash": "eb397be9e1b3bb0d7287d12cba53a00cc4fd3428"
+          }
+        },
+        {
+          "client_id": "1081890269620-g6gkhaqv83i3f2v1h87hcpvhgf4a4o9u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvevFnB0lcrKcnxSwvvv0Py3H9g1Zo_9k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081890269620-g6gkhaqv83i3f2v1h87hcpvhgf4a4o9u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
