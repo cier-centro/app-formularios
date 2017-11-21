@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FormulariAPP</string>
+    <string name="hint">Inserte su texto</string>
 </resources>

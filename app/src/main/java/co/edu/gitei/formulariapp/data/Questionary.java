@@ -5,16 +5,26 @@ package co.edu.gitei.formulariapp.data;
  */
 
 public class Questionary {
-    private int id;
+    private long id;
     private String formReference;
     private String answers;
 
+    public Questionary(long id, String formReference, String answers) {
+        this.id=id;
+        this.formReference=formReference;
+        this.answers=answers;
+    }
 
-    public int getId() {
+    public Questionary() {
+
+    }
+
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
