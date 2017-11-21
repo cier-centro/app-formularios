@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,6 +50,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout viewProductLayout = (LinearLayout) findViewById(R.id.questionsPanel);
+
+        Button btn = (Button) findViewById(R.id.button_send_form);
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Log.d("LLEGGGGOOOOO", "SIIIIIIIIIIIII");
+
+                getDataFromDynamicViews(v);
+            }
+        });
 
         try {
             jsonObject = new JSONObject(DummyData.dummyData);
@@ -182,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -197,4 +209,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void getDataFromDynamicViews(View v) {
+        try {
+            JSONArray customOptnList = jsonObject.getJSONArray("product_options");
+            optionsObj = new JSONObject();
+            for (int noOfViews = 0; noOfViews < customOptnList.length(); noOfViews++) {
+                JSONObject eachData = customOptnList.getJSONObject(noOfViews);
+
+                if (eachData.getString("option_type").equals("S")) {
+                    Spinner spinner = (Spinner) allViewInstance.get(noOfViews);
+
+                    JSONArray dropDownJSONOpt = eachData.getJSONArray("variants");
+                    String variant_name = dropDownJSONOpt.getJSONObject(spinner.getSelectedItemPosition()).getString("variant_name");
+                    Log.d("variant_name", variant_name + "");
+                    optionsObj.put(eachData.getString("option_name"),
+                            "" + variant_name);
+                }
+
+                if (eachData.getString("option_type").equals("R")) {
+                    RadioGroup radioGroup = (RadioGroup) allViewInstance.get(noOfViews);
+                    RadioButton selectedRadioBtn = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+                    Log.d("variant_name", selectedRadioBtn.getTag().toString() + "");
+                    optionsObj.put(eachData.getString("option_name"),
+                            "" + selectedRadioBtn.getTag().toString());
+                }
+
+                if (eachData.getString("option_type").equals("C")) {
+                    CheckBox tempChkBox = (CheckBox) allViewInstance.get(noOfViews);
+                    if (tempChkBox.isChecked()) {
+                        optionsObj.put(eachData.getString("option_name"), tempChkBox.getTag().toString());
+                    }
+                    Log.d("variant_name", tempChkBox.getTag().toString() + "");
+                }
+                if (eachData.getString("option_type").equals("T")) {
+                    TextView textView = (TextView) allViewInstance.get(noOfViews);
+                    if (!textView.getText().toString().equalsIgnoreCase(""))
+                        optionsObj.put(eachData.getString("option_name"), textView.getText().toString());
+                    else
+                        optionsObj.put(eachData.getString("option_name"), textView.getText().toString());
+                    Log.d("variant_name", textView.getText().toString() + "");
+                }
+            }
+
+            String outputData = (optionsObj + "").replace(",", "\n");
+            outputData = outputData.replaceAll("[{}]","");
+            ((TextView) findViewById(R.id.showData)).setText(outputData);
+            Log.d("optionsObj", optionsObj + "");
+
+            hideSoftKeyboard(findViewById(R.id.layout));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    public void hideSoftKeyboard(View v) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+}

@@ -87,6 +87,120 @@ public class DummyData {
             "            ]\n" +
             "        },\n" +
             "        {\n" +
+            "            \"option_type\": \"C\",\n" +
+            "            \"value\": 54,\n" +
+            "            \"option_name\": \"3G Connectivity\",\n" +
+            "            \"variants\": [\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"54\",\n" +
+            "                    \"variant_name\": \"NO\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"53\",\n" +
+            "                    \"variant_name\": \"YES\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$125.00\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"option_type\": \"C\",\n" +
+            "            \"value\": 54,\n" +
+            "            \"option_name\": \"3G Connectivity\",\n" +
+            "            \"variants\": [\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"54\",\n" +
+            "                    \"variant_name\": \"NO\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"53\",\n" +
+            "                    \"variant_name\": \"YES\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$125.00\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"option_type\": \"C\",\n" +
+            "            \"value\": 54,\n" +
+            "            \"option_name\": \"3G Connectivity\",\n" +
+            "            \"variants\": [\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"54\",\n" +
+            "                    \"variant_name\": \"NO\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"53\",\n" +
+            "                    \"variant_name\": \"YES\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$125.00\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"option_type\": \"C\",\n" +
+            "            \"value\": 54,\n" +
+            "            \"option_name\": \"3G Connectivity\",\n" +
+            "            \"variants\": [\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"54\",\n" +
+            "                    \"variant_name\": \"NO\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"53\",\n" +
+            "                    \"variant_name\": \"YES\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$125.00\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"option_type\": \"C\",\n" +
+            "            \"value\": 54,\n" +
+            "            \"option_name\": \"3G Connectivity\",\n" +
+            "            \"variants\": [\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"54\",\n" +
+            "                    \"variant_name\": \"NO\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"53\",\n" +
+            "                    \"variant_name\": \"YES\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$125.00\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"option_type\": \"C\",\n" +
+            "            \"value\": 54,\n" +
+            "            \"option_name\": \"3G Connectivity\",\n" +
+            "            \"variants\": [\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"54\",\n" +
+            "                    \"variant_name\": \"NO\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"variant_id\": \"53\",\n" +
+            "                    \"variant_name\": \"YES\",\n" +
+            "                    \"image_pair\": [],\n" +
+            "                    \"formatmodifier\": \"$125.00\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
+            "        {\n" +
             "            \"option_type\": \"S\",\n" +
             "            \"value\": 49,\n" +
             "            \"option_name\": \"Memory capacity\",\n" +
