@@ -8,15 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d("LLEGGGGOOOOO", "SIIIIIIIIIIIII");
-
                 getDataFromDynamicViews(v);
             }
         });
@@ -76,39 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 customOptionsName.setText(eachData.getString("option_name"));
                 viewProductLayout.addView(customOptionsName);
 
-                if (eachData.getString("option_type").equals("S")) {
-
-                    final JSONArray dropDownJSONOpt = eachData.getJSONArray("variants");
-                    ArrayList<String> SpinnerOptions = new ArrayList<String>();
-                    for (int j = 0; j < dropDownJSONOpt.length(); j++) {
-                        String optionString = dropDownJSONOpt.getJSONObject(j).getString("variant_name");
-                        SpinnerOptions.add(optionString);
-                    }
-
-                    ArrayAdapter<String> spinnerArrayAdapter = null;
-                    spinnerArrayAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.spiner_row, SpinnerOptions);
-                    Spinner spinner = new Spinner(MainActivity.this);
-                    allViewInstance.add(spinner);
-                    spinner.setAdapter(spinnerArrayAdapter);
-                    spinner.setSelection(0, false);
-                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                            try {
-                                String variant_name = dropDownJSONOpt.getJSONObject(position).getString("variant_name");
-                                Toast.makeText(getApplicationContext(), variant_name + "", Toast.LENGTH_LONG).show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parentView) {
-                        }
-
-                    });
-                    viewProductLayout.addView(spinner);
-                }
 
 //                    /***************************Radio*****************************************************/
 
@@ -155,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray checkBoxJSONOpt = eachData.getJSONArray("variants");
 
                     for (int j = 0; j < checkBoxJSONOpt.length(); j++) {
-
-                        if (!(checkBoxJSONOpt.getJSONObject(j).getString("variant_name").equalsIgnoreCase("NO"))) {
                             CheckBox chk = new CheckBox(MainActivity.this);
                             chk.setBackgroundColor(Color.parseColor("#FFFFFF"));
                             allViewInstance.add(chk);
@@ -175,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
                             });
                             chk.setText(optionString);
                             viewProductLayout.addView(chk, params);
-                        }
                     }
                 }
                 if (eachData.getString("option_type").equals("T")) {
@@ -212,22 +171,16 @@ public class MainActivity extends AppCompatActivity {
     public void getDataFromDynamicViews(View v) {
         try {
             JSONArray customOptnList = jsonObject.getJSONArray("product_options");
+
             optionsObj = new JSONObject();
+            int countCorrection=0;
             for (int noOfViews = 0; noOfViews < customOptnList.length(); noOfViews++) {
                 JSONObject eachData = customOptnList.getJSONObject(noOfViews);
-
-                if (eachData.getString("option_type").equals("S")) {
-                    Spinner spinner = (Spinner) allViewInstance.get(noOfViews);
-
-                    JSONArray dropDownJSONOpt = eachData.getJSONArray("variants");
-                    String variant_name = dropDownJSONOpt.getJSONObject(spinner.getSelectedItemPosition()).getString("variant_name");
-                    Log.d("variant_name", variant_name + "");
-                    optionsObj.put(eachData.getString("option_name"),
-                            "" + variant_name);
-                }
-
+                /*Log.d("ESTO a evaluar",eachData.getString("option_type"));
+                Log.d("ESTO TAMBIEN",allViewInstance.get(noOfViews).toString());*/
                 if (eachData.getString("option_type").equals("R")) {
-                    RadioGroup radioGroup = (RadioGroup) allViewInstance.get(noOfViews);
+                    RadioGroup radioGroup = (RadioGroup) allViewInstance.get(noOfViews+countCorrection);
+                    Log.d("LOG", "si puedo hacer casting a RADIOGROUP");
                     RadioButton selectedRadioBtn = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
                     Log.d("variant_name", selectedRadioBtn.getTag().toString() + "");
                     optionsObj.put(eachData.getString("option_name"),
@@ -235,14 +188,26 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (eachData.getString("option_type").equals("C")) {
-                    CheckBox tempChkBox = (CheckBox) allViewInstance.get(noOfViews);
-                    if (tempChkBox.isChecked()) {
-                        optionsObj.put(eachData.getString("option_name"), tempChkBox.getTag().toString());
+                    boolean allOptionReviewed=false;
+                    while (!allOptionReviewed) {
+                        Log.d("REVISION", countCorrection+"");
+                        CheckBox tempChkBox = (CheckBox) allViewInstance.get(noOfViews+countCorrection);
+                        if (tempChkBox.isChecked()) {
+                            optionsObj.put(eachData.getString("option_name"), tempChkBox.getTag().toString());
+                        }
+
+                        Log.d("variant_name", tempChkBox.getTag().toString());
+                        try{
+                            countCorrection++;
+                            Object ob =customOptnList.getJSONObject(noOfViews+countCorrection).getString("option_type");
+                        }catch (Exception e){
+                            countCorrection--;
+                            allOptionReviewed=true;
+                        }
                     }
-                    Log.d("variant_name", tempChkBox.getTag().toString() + "");
                 }
                 if (eachData.getString("option_type").equals("T")) {
-                    TextView textView = (TextView) allViewInstance.get(noOfViews);
+                    TextView textView = (TextView) allViewInstance.get(noOfViews+countCorrection);
                     if (!textView.getText().toString().equalsIgnoreCase(""))
                         optionsObj.put(eachData.getString("option_name"), textView.getText().toString());
                     else

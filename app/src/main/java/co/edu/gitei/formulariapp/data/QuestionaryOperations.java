@@ -66,10 +66,16 @@ public class QuestionaryOperations {
         return answersList;
     }
 
-    //delete answer
-    public void removeEmployee(Questionary employee) {
 
-        database.delete(QuestionaryDBHandler.TABLE_ANSWERS, QuestionaryDBHandler.COLUMN_ID + "=" + employee.getId(), null);
+    public int updateEmployee(Questionary questionary) {
+
+        ContentValues values = new ContentValues();
+        values.put(QuestionaryDBHandler.COLUMN_FORM_REF, questionary.getFormReference());
+        values.put(QuestionaryDBHandler.COLUMN_ANSWERS, questionary.getAnswers());
+
+        // updating row
+        return database.update(QuestionaryDBHandler.TABLE_ANSWERS, values,
+                QuestionaryDBHandler.COLUMN_ID + "=?",new String[] { String.valueOf(questionary.getId())});
     }
 
 }
