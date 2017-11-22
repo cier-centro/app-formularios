@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">FormulariAPP</string>
     <string name="hint">Inserte su texto</string>
+    <string name="questionnaire">Cuestionario</string>
+    <string name="question1">1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque pulvinar tincidunt. Proin mollis blandit neque, id egestas nisl tristique eu. Nunc convallis, sapien ac pharetra vehicula, arcu eros aliquet urna, nec pharetra est metus vitae sem. Suspendisse pharetra pharetra vehicula. Nunc convallis, sapien ac pharetra vehicula, arcu eros aliquet urna, nec pharetra est metus vitae sem. Suspendisse pharetra pharetra vehicula.</string>
+    <string name="question2">2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque pulvinar tincidunt.</string>
+    <string name="question3">3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque pulvinar tincidunt. Proin mollis blandit neque, id egestas nisl tristique eu.</string>
+    <string name="questionOption1">A. Pellentesque scelerisque pulvinar tincidunt. Proin mollis blandit neque, id egestas nisl tristique eu. </string>
+    <string name="questionOption2">B. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque pulvinar tincidunt.</string>
+    <string name="questionOption3">C. Proin mollis blandit neque, id egestas nisl tristique eu.</string>
+    <string name="questionOption4">D. Nunc convallis, sapien ac pharetra vehicula, arcu eros aliquet urna, nec pharetra est metus vitae sem. </string>
 </resources>

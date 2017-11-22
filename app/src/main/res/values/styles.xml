@@ -1,11 +1,50 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="MainScrollView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+    </style>
+    <style name="Title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@android:color/black</item>
+        <item name="android:layout_marginBottom">30px</item>
+    </style>
+    <style name="QuestionWording">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:paddingBottom">25px</item>
+    </style>
+    <style name="QuestionOption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/holo_green_dark</item>
+        <item name="android:paddingBottom">25px</item>
+    </style>
+    <style name="CodeFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#00FF00</item>
+    </style>
+    <style name="CodeFont.BigText">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#FF0000</item>
     </style>
 
 </resources>
