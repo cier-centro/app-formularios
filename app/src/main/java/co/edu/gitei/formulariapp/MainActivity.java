@@ -120,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
                         CheckBox chk = new CheckBox(MainActivity.this);
                         chk.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         allViewInstance.add(chk);
-                        chk.setTag(checkBoxJSONOpt.getJSONObject(j).getString("variant_name"));
+                        chk.setTag(checkBoxJSONOpt.getJSONObject(j).getString("option_"+(j+1)));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         params.topMargin = 3;
                         params.bottomMargin = 3;
-                        String optionString = checkBoxJSONOpt.getJSONObject(j).getString("variant_name");
+                        String optionString = checkBoxJSONOpt.getJSONObject(j).getString("option_"+(j+1));
                         chk.setOnClickListener(new View.OnClickListener() {
 
                             @Override
@@ -170,41 +170,35 @@ public class MainActivity extends AppCompatActivity {
 
     public void getDataFromDynamicViews(View v) {
         try {
-            JSONArray customOptnList = jsonObject.getJSONArray("product_options");
+            JSONArray customOptnList = jsonObject.getJSONArray("questionary_options");
 
             optionsObj = new JSONObject();
             int countCorrection=0;
             for (int noOfViews = 0; noOfViews < customOptnList.length(); noOfViews++) {
                 JSONObject eachData = customOptnList.getJSONObject(noOfViews);
-                /*Log.d("ESTO a evaluar",eachData.getString("option_type"));
-                Log.d("ESTO TAMBIEN",allViewInstance.get(noOfViews).toString());*/
                 if (eachData.getString("option_type").equals("R")) {
                     RadioGroup radioGroup = (RadioGroup) allViewInstance.get(noOfViews+countCorrection);
-                    Log.d("LOG", "si puedo hacer casting a RADIOGROUP");
                     RadioButton selectedRadioBtn = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
-                    Log.d("variant_name", selectedRadioBtn.getTag().toString() + "");
                     optionsObj.put(eachData.getString("option_name"),
                             "" + selectedRadioBtn.getTag().toString());
                 }
 
+                // this if reads all checkbox items and save its answers in a JSON object, after it this object is saved in the main JSON that stores
+                // all answers
                 if (eachData.getString("option_type").equals("C")) {
-                    boolean allOptionReviewed=false;
-                    while (!allOptionReviewed) {
+                    JSONObject variants= new JSONObject();
+                    JSONArray checkBoxJSONOpt = eachData.getJSONArray("variants");
+                    for (int j = 0; j < checkBoxJSONOpt.length(); j++) {
                         Log.d("REVISION", countCorrection+"");
                         CheckBox tempChkBox = (CheckBox) allViewInstance.get(noOfViews+countCorrection);
                         if (tempChkBox.isChecked()) {
-                            optionsObj.put(eachData.getString("option_name"), tempChkBox.getTag().toString());
+                            variants.put("option_"+(j+1), tempChkBox.getTag().toString());
                         }
-
-                        Log.d("variant_name", tempChkBox.getTag().toString());
-                        try{
-                            countCorrection++;
-                            Object ob =customOptnList.getJSONObject(noOfViews+countCorrection).getString("option_type");
-                        }catch (Exception e){
-                            countCorrection--;
-                            allOptionReviewed=true;
-                        }
+                         countCorrection++;
                     }
+                    countCorrection--;
+                    optionsObj.put(eachData.getString("option_name"),variants);
+
                 }
                 if (eachData.getString("option_type").equals("T")) {
                     TextView textView = (TextView) allViewInstance.get(noOfViews+countCorrection);

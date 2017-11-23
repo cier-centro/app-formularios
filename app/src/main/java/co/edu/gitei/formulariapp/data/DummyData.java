@@ -5,18 +5,16 @@ package co.edu.gitei.formulariapp.data;
 public class DummyData {
 
     public static String dummyData = "{\n" +
-            "    \"product_options\": [\n" +
+            "    \"questionary_options\": [\n" +
             "        {\n" +
             "            \"option_type\": \"R\",\n" +
             "            \"option_name\": \"Accessories\",\n" +
             "            \"variants\": [\n" +
             "                {\n" +
-            "                    \"variant_name\": \"Ear-phones\",\n" +
-            "                    \"formatmodifier\": \"$30.00\"\n" +
+            "                    \"variant_name\": \"Ear-phones\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"Head-phones\",\n" +
-            "                    \"formatmodifier\": \"$10.00\"\n" +
+            "                    \"variant_name\": \"Head-phones\"\n" +
             "                }\n" +
             "            ]\n" +
             "        },\n" +
@@ -25,28 +23,22 @@ public class DummyData {
             "            \"option_name\": \"Color\",\n" +
             "            \"variants\": [\n" +
             "                {\n" +
-            "                    \"variant_name\": \"White\",\n" +
-            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                    \"variant_name\": \"White\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"Black\",\n" +
-            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                    \"variant_name\": \"Black\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"Blue\",\n" +
-            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                    \"variant_name\": \"Blue\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"Red\",\n" +
-            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                    \"variant_name\": \"Red\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"Green\",\n" +
-            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                    \"variant_name\": \"Green\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"Yellow\",\n" +
-            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                    \"variant_name\": \"Yellow\"\n" +
             "                }\n" +
             "            ]\n" +
             "        },\n" +
@@ -55,16 +47,13 @@ public class DummyData {
             "            \"option_name\": \"3G Connectivity\",\n" +
             "            \"variants\": [\n" +
             "                {\n" +
-            "                    \"variant_name\": \"NO\",\n" +
-            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                    \"option_1\": \"NO\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \":D\",\n" +
-            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                    \"option_2\": \":D\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"YES\",\n" +
-            "                    \"formatmodifier\": \"$125.00\"\n" +
+            "                    \"option_3\": \"YES\"\n" +
             "                }\n" +
             "            ]\n" +
             "        },\n" +
@@ -73,20 +62,16 @@ public class DummyData {
             "            \"option_name\": \"Memory capacity\",\n" +
             "            \"variants\": [\n" +
             "                {\n" +
-            "                    \"variant_name\": \"16GB\",\n" +
-            "                    \"formatmodifier\": \"$0.00\"\n" +
+            "                    \"variant_name\": \"16GB\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"32GB\",\n" +
-            "                    \"formatmodifier\": \"$100.00\"\n" +
+            "                    \"variant_name\": \"32GB\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"64GB\",\n" +
-            "                    \"formatmodifier\": \"$200.00\"\n" +
+            "                    \"variant_name\": \"64GB\"\n" +
             "                },\n" +
             "                {\n" +
-            "                    \"variant_name\": \"128GB\",\n" +
-            "                    \"formatmodifier\": \"$300.00\"\n" +
+            "                    \"variant_name\": \"128GB\"\n" +
             "                }\n" +
             "            ]\n" +
             "        },\n" +
