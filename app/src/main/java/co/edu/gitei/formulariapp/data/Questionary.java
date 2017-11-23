@@ -19,6 +19,11 @@ public class Questionary {
 
     }
 
+    public Questionary(String formRef, String answers) {
+        this.formReference=formRef;
+        this.answers=answers;
+    }
+
 
     public long getId() {
         return id;

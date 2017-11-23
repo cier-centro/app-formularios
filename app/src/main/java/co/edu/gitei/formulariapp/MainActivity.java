@@ -28,13 +28,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.gitei.formulariapp.data.DummyData;
+import co.edu.gitei.formulariapp.data.Questionary;
+import co.edu.gitei.formulariapp.data.QuestionaryOperations;
 
 public class MainActivity extends AppCompatActivity {
 
     int prueba;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabase =database.getReference();
-
+    private String questRef;
+    private Questionary questions;
+    private QuestionaryOperations questionaryOps;
 
     List<View> allViewInstance = new ArrayList<View>();
     JSONObject jsonObject = new JSONObject();
@@ -44,6 +48,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        questionaryOps=new QuestionaryOperations(this);
+        if(questionaryOps.getAllAnswers().size()<1){
+            questionaryOps.addAnswer(new Questionary("dummy",DummyData.dummyData));
+        }
+        questions=questionaryOps.getQuestionary(1);
+        questRef=questions.getFormReference();
+        loadForm(questions.getAnswers());
+
+
+    }
+
+    private void loadForm(String form){
         setContentView(R.layout.activity_main);
 
         LinearLayout viewProductLayout = (LinearLayout) findViewById(R.id.questionsPanel);
@@ -53,14 +69,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-                getDataFromDynamicViews(v);
+                JSONObject object=getDataFromDynamicViews(v);
+                Questionary tempQuestionary=new Questionary();
+                tempQuestionary.setFormReference(questRef);
+                tempQuestionary.setAnswers(object.toString());
+                questionaryOps.addAnswer(tempQuestionary);
             }
         });
 
         try {
-            jsonObject = new JSONObject(DummyData.dummyData);
-            JSONArray questionsList = jsonObject.getJSONArray("product_options");
+            jsonObject = new JSONObject(form);
+            JSONArray questionsList = jsonObject.getJSONArray("questionary_options");
 
             for (int noOfQuestions = 0; noOfQuestions < questionsList.length(); noOfQuestions++) {
 
@@ -140,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 if (eachData.getString("option_type").equals("T")) {
                     TextInputLayout til = new TextInputLayout(MainActivity.this);
                     //REVISAR--- NO SEA VAGO
-                    til.setHint(getString(R.string.app_name));
+                    //til.setHint(getString(R.string.app_name));
                     EditText et = new EditText(MainActivity.this);
                     til.addView(et);
                     allViewInstance.add(et);
@@ -151,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -168,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void getDataFromDynamicViews(View v) {
+    public JSONObject getDataFromDynamicViews(View v) {
         try {
             JSONArray customOptnList = jsonObject.getJSONArray("questionary_options");
 
@@ -219,6 +238,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return optionsObj;
     }
 
     public void hideSoftKeyboard(View v) {
