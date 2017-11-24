@@ -7,10 +7,12 @@ package co.edu.gitei.formulariapp.data;
 public class Questionary {
     private long id;
     private String formReference;
+    private String formCreationIdentifier;
     private String answers;
 
-    public Questionary(long id, String formReference, String answers) {
+    public Questionary(long id, String formReference, String formCreationIdentifier, String answers) {
         this.id=id;
+        this.formCreationIdentifier=formCreationIdentifier;
         this.formReference=formReference;
         this.answers=answers;
     }
@@ -19,8 +21,9 @@ public class Questionary {
 
     }
 
-    public Questionary(String formRef, String answers) {
+    public Questionary(String formRef, String formCreationId, String answers) {
         this.formReference=formRef;
+        this.formCreationIdentifier=formCreationId;
         this.answers=answers;
     }
 
@@ -47,5 +50,13 @@ public class Questionary {
 
     public void setAnswers(String answers) {
         this.answers = answers;
+    }
+
+    public String getFormCreationIdentifier() {
+        return formCreationIdentifier;
+    }
+
+    public void setFormCreationIdentifier(String formCreationIdentifier) {
+        this.formCreationIdentifier = formCreationIdentifier;
     }
 }

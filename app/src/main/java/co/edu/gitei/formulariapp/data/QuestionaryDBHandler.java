@@ -17,16 +17,17 @@ public class QuestionaryDBHandler extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "questions.db";
-    private static final int DATABASE_VERSION=1;
+    private static final int DATABASE_VERSION=2;
 
     public static final String TABLE_ANSWERS="answers";
     public static final String COLUMN_ID = "formularyID";
     public static final String COLUMN_FORM_REF ="formReference";
+    public static final String COLUMN_FORM_ID="formIdentifier";
     public static final String COLUMN_ANSWERS = "answers";
 
     private static final String TABLE_CREATE = "CREATE TABLE "+ TABLE_ANSWERS
             +" (" +COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_FORM_REF +" TEXT, "+COLUMN_ANSWERS+" TEXT )";
+            COLUMN_FORM_REF +" TEXT, "+COLUMN_FORM_ID+" TEXT, "+COLUMN_ANSWERS+" TEXT )";
 
 
     public QuestionaryDBHandler(Context context){

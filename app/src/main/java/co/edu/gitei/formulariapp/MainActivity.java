@@ -1,10 +1,14 @@
 package co.edu.gitei.formulariapp;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -17,14 +21,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import co.edu.gitei.formulariapp.data.DummyData;
@@ -39,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private String questRef;
     private Questionary questions;
     private QuestionaryOperations questionaryOps;
+    private int numFormsInDB;
 
     List<View> allViewInstance = new ArrayList<View>();
     JSONObject jsonObject = new JSONObject();
@@ -49,12 +58,50 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         questionaryOps=new QuestionaryOperations(this);
-        if(questionaryOps.getAllAnswers().size()<1){
-            questionaryOps.addAnswer(new Questionary("dummy",DummyData.dummyData));
+
+        if(numFormsInDB<1){
+            questionaryOps.addAnswer(new Questionary("dummy","dummy",DummyData.dummyData));
         }
+
+        numFormsInDB=questionaryOps.getAllAnswers().size();
+
+
+        //the intention of this listener is for probe which answers set is updated and delete it from de local DB
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Questionary>formsInDB=questionaryOps.getAllAnswers();
+                for (Questionary question: formsInDB ) {
+                    if(question.getId()>1) {  //yes, is a dumb if, but i prefer it over have a very large condition below, this if skips the question row (the first one)
+                        if (dataSnapshot.child(question.getFormReference()).child(question.getFormCreationIdentifier()).exists()) {
+                            questionaryOps.removeQuestionay(question);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         questions=questionaryOps.getQuestionary(1);
         questRef=questions.getFormReference();
         loadForm(questions.getAnswers());
+        Button btn = (Button) findViewById(R.id.button_send_form);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JSONObject object=getDataFromDynamicViews(v);
+                Questionary tempQuestionary=new Questionary();
+                tempQuestionary.setFormReference(questRef);
+                tempQuestionary.setAnswers(object.toString());
+                tempQuestionary.setFormCreationIdentifier(Calendar.getInstance().getTime().toString()+""+ Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+                questionaryOps.addAnswer(tempQuestionary);
+                loadForm(questions.getAnswers());
+            }
+        });
 
 
     }
@@ -64,18 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayout viewProductLayout = (LinearLayout) findViewById(R.id.questionsPanel);
 
-        Button btn = (Button) findViewById(R.id.button_send_form);
-        btn.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                JSONObject object=getDataFromDynamicViews(v);
-                Questionary tempQuestionary=new Questionary();
-                tempQuestionary.setFormReference(questRef);
-                tempQuestionary.setAnswers(object.toString());
-                questionaryOps.addAnswer(tempQuestionary);
-            }
-        });
 
         try {
             jsonObject = new JSONObject(form);
@@ -173,6 +209,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private boolean uploadAnElementDataInCloudDB(Questionary questionary){
+        if(isConnectedToInternet()){
+            try {
+                mDatabase.child(questionary.getFormReference()).child(questionary.getFormCreationIdentifier()).setValue(new JSONObject(questionary.getAnswers()));
+                return true;
+            }catch (Exception e){
+                Log.e("uploadDataInCloudDB: ", e.toString());
+                return false;
+            }
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Sin Conexión a internet",Toast.LENGTH_LONG);
+        }
+        return false;
+    }
+
+    private void uploadAllToCloudDB(){
+        List<Questionary> answersInDB=questionaryOps.getAllAnswers();
+        for(Questionary question: answersInDB){
+            if(question.getId()>1) {
+                uploadAnElementDataInCloudDB(question);
+            }
+        }
+    }
+
+    public boolean isConnectedToInternet(){
+        ConnectivityManager connectivityManager =  (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -186,6 +253,21 @@ public class MainActivity extends AppCompatActivity {
         prueba=savedInstanceState.getInt("stateCount");
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.upload:
+                if(isConnectedToInternet()) {
+                    uploadAllToCloudDB();
+                }else {
+                    Toast.makeText(getApplicationContext(),"Sin Conexión a internet",Toast.LENGTH_LONG);
+                }
+                break;
+            case R.id.new_form:
+        }
+        return true;
+    }
 
     public JSONObject getDataFromDynamicViews(View v) {
         try {
@@ -229,10 +311,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            /*
             String outputData = (optionsObj + "").replace(",", "\n");
             outputData = outputData.replaceAll("[{}]","");
             ((TextView) findViewById(R.id.showData)).setText(outputData);
-            Log.d("optionsObj", optionsObj + "");
+            Log.d("optionsObj", optionsObj + "");*/
 
             hideSoftKeyboard(findViewById(R.id.layout));
         } catch (Exception e) {

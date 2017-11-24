@@ -20,7 +20,7 @@ public class QuestionaryOperations {
     Context context;
     public static final String LOGTAG = "QUEST_MNGMNT_SYS";
 
-    private static final String[] columns={QuestionaryDBHandler.COLUMN_ID,QuestionaryDBHandler.COLUMN_FORM_REF,QuestionaryDBHandler.COLUMN_ANSWERS};
+    private static final String[] columns={QuestionaryDBHandler.COLUMN_ID,QuestionaryDBHandler.COLUMN_FORM_REF, QuestionaryDBHandler.COLUMN_FORM_ID,QuestionaryDBHandler.COLUMN_ANSWERS};
 
     public QuestionaryOperations(Context context){
         dbhandler = new QuestionaryDBHandler(context);
@@ -42,6 +42,7 @@ public class QuestionaryOperations {
 
     public Questionary addAnswer(Questionary questionary){
         ContentValues values  = new ContentValues();
+        values.put(QuestionaryDBHandler.COLUMN_FORM_ID,questionary.getFormCreationIdentifier());
         values.put(QuestionaryDBHandler.COLUMN_FORM_REF,questionary.getFormReference());
         values.put(QuestionaryDBHandler.COLUMN_ANSWERS,questionary.getAnswers());
         long insertid = database.insert(QuestionaryDBHandler.TABLE_ANSWERS,null,values);
@@ -55,9 +56,10 @@ public class QuestionaryOperations {
         Cursor cursor = database.query(QuestionaryDBHandler.TABLE_ANSWERS,columns,QuestionaryDBHandler.COLUMN_ID + "=?",new String[]{String.valueOf(id)},null,null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
+        Log.d("ESTADOACTUAL",cursor.toString());
 
-        Questionary e = new Questionary(Long.parseLong(cursor.getString(0)),cursor.getString(1),cursor.getString(2));
-        // return Employee
+        Questionary e = new Questionary(Long.parseLong(cursor.getString(0)),cursor.getString(1),cursor.getString(2), cursor.getString(3));
+
         return e;
     }
 
@@ -71,6 +73,7 @@ public class QuestionaryOperations {
             while(cursor.moveToNext()) {
                 Questionary questionary = new Questionary();
                 questionary.setId(cursor.getLong(cursor.getColumnIndex(QuestionaryDBHandler.COLUMN_ID)));
+                questionary.setFormCreationIdentifier(cursor.getString(cursor.getColumnIndex(QuestionaryDBHandler.COLUMN_FORM_ID)));
                 questionary.setFormReference(cursor.getString(cursor.getColumnIndex(QuestionaryDBHandler.COLUMN_FORM_REF)));
                 questionary.setAnswers(cursor.getString(cursor.getColumnIndex(QuestionaryDBHandler.COLUMN_ANSWERS)));
                 answersList.add(questionary);
@@ -82,7 +85,7 @@ public class QuestionaryOperations {
     }
 
 
-    public int updateEmployee(Questionary questionary) {
+    public int updateQuesionary(Questionary questionary) {
 
         ContentValues values = new ContentValues();
         values.put(QuestionaryDBHandler.COLUMN_FORM_REF, questionary.getFormReference());
@@ -93,4 +96,8 @@ public class QuestionaryOperations {
                 QuestionaryDBHandler.COLUMN_ID + "=?",new String[] { String.valueOf(questionary.getId())});
     }
 
+    public void removeQuestionay(Questionary questionary) {
+
+        database.delete(QuestionaryDBHandler.TABLE_ANSWERS, QuestionaryDBHandler.COLUMN_ID + "=" + questionary.getId(), null);
+    }
 }
