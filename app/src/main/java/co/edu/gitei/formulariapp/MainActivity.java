@@ -1,6 +1,7 @@
 package co.edu.gitei.formulariapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +105,14 @@ public class MainActivity extends AppCompatActivity {
                 loadForm(questions.getAnswers());
             }
         });
+        Button buttonForms=(Button) findViewById(R.id.signup);
+        buttonForms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, AccordionActivity.class);
+                startActivity(i);
+            }
+        });
 
 
     }
@@ -110,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout viewProductLayout = (LinearLayout) findViewById(R.id.questionsPanel);
-
+        viewProductLayout.removeAllViews();
 
 
         try {
@@ -253,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
         prueba=savedInstanceState.getInt("stateCount");
     }
 
-
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -268,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
+*/
     public JSONObject getDataFromDynamicViews(View v) {
         try {
             JSONArray customOptnList = jsonObject.getJSONArray("questionary_options");
@@ -331,5 +342,31 @@ public class MainActivity extends AppCompatActivity {
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+/*
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.new_form:
+                loadForm(questions.getAnswers());
+                return true;
+            case R.id.load_form:
+                Intent i = new Intent(MainActivity.this, AccordionActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return false;
+        }
+
+    }*/
 
 }
