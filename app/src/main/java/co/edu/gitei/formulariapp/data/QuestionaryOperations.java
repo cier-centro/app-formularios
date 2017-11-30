@@ -78,7 +78,6 @@ public class QuestionaryOperations {
             while(cursor.moveToNext()) {
                 Questionary questionary = new Questionary();
                 questionary.setId(cursor.getLong(cursor.getColumnIndex(QuestionaryDBHandler.COLUMN_ID)));
-                Log.d("CONTROL ESPECIAL", questionary.getId()+"");
                 questionary.setFormCreationIdentifier(cursor.getString(cursor.getColumnIndex(QuestionaryDBHandler.COLUMN_FORM_ID)));
                 questionary.setFormReference(cursor.getString(cursor.getColumnIndex(QuestionaryDBHandler.COLUMN_FORM_REF)));
                 questionary.setAnswers(cursor.getString(cursor.getColumnIndex(QuestionaryDBHandler.COLUMN_ANSWERS)));

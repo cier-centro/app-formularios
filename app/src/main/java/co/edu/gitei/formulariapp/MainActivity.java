@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private void loadForm(String form){
         setContentView(R.layout.activity_main);
 

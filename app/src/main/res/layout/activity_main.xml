@@ -38,7 +38,7 @@
         tools:layout_editor_absoluteY="62dp"
         tools:layout_editor_absoluteX="0dp" />
 
-    <Button
+    <!--<Button
         android:id="@+id/signup"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         android:padding="10dp"
         android:text="Get Data"
         android:textColor="#FFFFFF"
-        android:textStyle="bold" />
+        android:textStyle="bold" />-->
 
 
 

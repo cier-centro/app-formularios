@@ -32,6 +32,7 @@ public class MenuActivity extends Activity {
         numFormsInDB=questionaryOps.getAllAnswers().size();
 
         if(numFormsInDB<1){
+
             questionaryOps.addAnswer(new Questionary("dummy","dummy", DummyData.dummyData));
         }
 

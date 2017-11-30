@@ -56,6 +56,7 @@ public class AccordionActivity extends Activity {
                     jsonArray= new JSONArray();
                     while (iterator.hasNext()){
                         String key=(String) iterator.next();
+
                         Log.d("CONTROL ",key);
                         jsonArray.put(jsonObject.get(key));
                     }
