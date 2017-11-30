@@ -50,25 +50,20 @@ public class MainActivity extends AppCompatActivity {
     private String questRef;
     private Questionary questions;
     private QuestionaryOperations questionaryOps;
-    private int numFormsInDB;
+
+    private Button btn;
 
     List<View> allViewInstance = new ArrayList<View>();
     JSONObject jsonObject = new JSONObject();
     private JSONObject optionsObj;
+    private final String TAG= "CONTROL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         questionaryOps=new QuestionaryOperations(this);
-
-        if(numFormsInDB<1){
-            questionaryOps.addAnswer(new Questionary("dummy","dummy",DummyData.dummyData));
-        }
-
-        numFormsInDB=questionaryOps.getAllAnswers().size();
-
-
+        Toast.makeText(getApplicationContext(), "ATENCION: tienes "+questionaryOps.getAllAnswers().size()+" sin subir", Toast.LENGTH_LONG).show();
         //the intention of this listener is for probe which answers set is updated and delete it from de local DB
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         questions=questionaryOps.getQuestionary(1);
         questRef=questions.getFormReference();
         loadForm(questions.getAnswers());
-        Button btn = (Button) findViewById(R.id.button_send_form);
+        btn = (Button) findViewById(R.id.button_send_form);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,26 +97,19 @@ public class MainActivity extends AppCompatActivity {
                 tempQuestionary.setAnswers(object.toString());
                 tempQuestionary.setFormCreationIdentifier(Calendar.getInstance().getTime().toString()+""+ Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
                 questionaryOps.addAnswer(tempQuestionary);
-                loadForm(questions.getAnswers());
-            }
-        });
-        Button buttonForms=(Button) findViewById(R.id.signup);
-        buttonForms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, AccordionActivity.class);
+                //loadForm(questions.getAnswers());
+                Toast.makeText(getApplicationContext(), "Formulario guardado correctamente", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(MainActivity.this,MenuActivity.class);
                 startActivity(i);
             }
+
         });
-
-
     }
 
     private void loadForm(String form){
         setContentView(R.layout.activity_main);
 
         LinearLayout viewProductLayout = (LinearLayout) findViewById(R.id.questionsPanel);
-        viewProductLayout.removeAllViews();
 
 
         try {
