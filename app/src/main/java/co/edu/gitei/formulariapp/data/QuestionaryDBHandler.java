@@ -17,7 +17,7 @@ public class QuestionaryDBHandler extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "questions.db";
-    private static final int DATABASE_VERSION=2;
+    private static final int DATABASE_VERSION=3;
 
     public static final String TABLE_ANSWERS="answers";
     public static final String COLUMN_ID = "formularyID";

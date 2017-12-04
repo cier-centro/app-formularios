@@ -34,8 +34,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import co.edu.gitei.formulariapp.data.DummyData;
@@ -95,7 +98,16 @@ public class MainActivity extends AppCompatActivity {
                 Questionary tempQuestionary=new Questionary();
                 tempQuestionary.setFormReference(questRef);
                 tempQuestionary.setAnswers(object.toString());
-                tempQuestionary.setFormCreationIdentifier(Calendar.getInstance().getTime().toString()+""+ Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+
+                /// /Long lg=System.currentTimeMillis();
+                //Timestamp timestamp = new Timestamp(lg);
+                //String currentTime=timestamp.toString();
+                //currentTime=currentTime.substring(0, currentTime.length()-3);
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                String currentTime = simpleDateFormat.format(new Date());
+
+                tempQuestionary.setFormCreationIdentifier(currentTime+""+ Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
                 questionaryOps.addAnswer(tempQuestionary);
                 //loadForm(questions.getAnswers());
                 Toast.makeText(getApplicationContext(), "Formulario guardado correctamente", Toast.LENGTH_LONG).show();
