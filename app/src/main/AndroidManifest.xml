@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".AccordionActivity"></activity>
+        <activity android:name=".SeeAll"></activity>
     </application>
 
 </manifest>

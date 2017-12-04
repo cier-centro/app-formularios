@@ -59,4 +59,12 @@ public class Questionary {
     public void setFormCreationIdentifier(String formCreationIdentifier) {
         this.formCreationIdentifier = formCreationIdentifier;
     }
+
+    @Override
+    public String toString(){
+        String string=" Grupo de preguntas: "+getFormReference()+"\n Formulario: "+getFormCreationIdentifier()+"\n";
+        string=string+" Respuestas: \n"+((getAnswers().replaceAll("[{]","")).replaceAll("[}]","\n")).replaceAll("\",","\"\n");
+
+        return string;
+    }
 }

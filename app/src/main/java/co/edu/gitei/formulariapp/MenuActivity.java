@@ -21,6 +21,7 @@ public class MenuActivity extends Activity {
     Button loadForms;
     Button seeSaved;
     Button switchQuestions;
+
     private int numFormsInDB;
     private QuestionaryOperations questionaryOps;
     @Override
@@ -49,7 +50,9 @@ public class MenuActivity extends Activity {
         seeSaved.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "En Desarrollo", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(MenuActivity.this, SeeAll.class);
+                startActivity(i);
+                //Toast.makeText(getApplicationContext(), "En Desarrollo", Toast.LENGTH_LONG).show();
             }
         });
         switchQuestions=(Button) findViewById(R.id.switch_questions);
